@@ -36,7 +36,7 @@ void setup(void)
 
 void loop()
 {
-  //Serial.println(phi2_cnt);
+  Serial.println(phi2_cnt);
   phi2_cnt = 0;
 
   for (int i = 0; i < 64; i++)
@@ -58,7 +58,7 @@ void loop()
   Serial.println();
   Serial.println();
 
-  delay(100);
+  delay(1000);
 }
 
 // ISR
