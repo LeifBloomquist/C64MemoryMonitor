@@ -1,6 +1,8 @@
 // ----------------------------------------------------------
 // C64 Visual Memory Monitor 
 
+#pragma GCC optimize("-O3")
+
 #include <Adafruit_NeoPixel.h>
 #include <digitalWriteFast.h>
 
@@ -49,20 +51,42 @@ int red = 0;
 int green = 0;
 int i = 0;
 
+int w = 0;
+int r = 0;
+
 void loop()
 {
   for (i = 0; i < LEDS; i++)
-  {    
-    red =  (writes[i] / phi2_cnt) * 255;
-    green = (reads[i] / phi2_cnt) * 255;   
+  { 
+    w = writes[i];
+    r = reads[i];
+
+    if (w > 0)    
+    {
+       red = map(w, 0, phi2_cnt, 100, 255);
+    }
+    else
+    {
+      red = 0;
+    }
+    
+    if (r > 0)
+    {
+      green = map(r, 0, phi2_cnt, 100, 255);
+    }
+    else
+    {
+      green = 0;
+    }
+
     strip.setPixelColor(i, red, green, 0);   
 
     writes[i] = 0;
     reads[i] = 0;    
   }
-  
- 
-  phi2_cnt = 0;
+
+  //Serial.println(phi2_cnt);
+  phi2_cnt = 0; 
 
   counter++;
   if (counter >= LEDS)
@@ -74,7 +98,7 @@ void loop()
   strip.show();
 
   //Serial.println(counter);
-  //delay(10); 
+ // delay(10); 
 }
 
 
