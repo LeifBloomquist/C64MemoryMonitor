@@ -25,7 +25,6 @@ volatile byte rw = 0;
 //volatile unsigned long phi2_cnt = 0;
 volatile int address1 = 0;
 volatile int address2 = 0;
-volatile int address3 = 0;
 
 volatile byte reads[LEDS] = { 0 };
 volatile byte writes[LEDS] = { 0 };
@@ -62,8 +61,8 @@ void loop()
   { 
     strip.setPixelColor(i, writes[i], reads[i], 0);
 
-    writes[i] = writes[i] >> 1;   // Fade the color out by shifting left
-    reads[i] = reads[i] >> 1;
+    writes[i] = writes[i] >> 1;   // Fade the color out by shifting right
+    reads[i]  = reads[i]  >> 1;
   }
 
   counter = !counter;
@@ -109,7 +108,6 @@ void phi2_isr()
   // This crazy logic filters out noise? on the expansion port
   address1 = PINB & B00111111;  // Invert (active low) and mask out the crystal inputs on upper two bits
   address2 = PINB & B00111111;  // Invert (active low) and mask out the crystal inputs on upper two bits
-
   if (address1 != address2) return;  
 
   if (rw)
