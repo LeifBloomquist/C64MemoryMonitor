@@ -112,11 +112,11 @@ void phi2_isr()
 
   if (rw)
   {
-    reads[address2]=255;   // High is a read
+    reads[address1]=255;   // High is a read
   }
   else
   {
-    writes[address2]=255;  // Low is a write
+    writes[address1]=255;  // Low is a write
   }
 
   //phi2_cnt++;
