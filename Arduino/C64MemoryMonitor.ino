@@ -65,8 +65,8 @@ void loop()
     reads[i]  = reads[i]  >> 1;
   }
 
-  counter = !counter;
-  strip.setPixelColor(59, 0, 0, counter*255);
+//  counter = !counter;
+//  strip.setPixelColor(59, 0, 0, counter*255);
   strip.show();
 }
 
@@ -103,12 +103,12 @@ void loop_debug()
 
 void phi2_isr()
 { 
-  rw = digitalReadFast(PIN_RW);
-
   // This crazy logic filters out noise? on the expansion port
   address1 = PINB & B00111111;  // Invert (active low) and mask out the crystal inputs on upper two bits
   address2 = PINB & B00111111;  // Invert (active low) and mask out the crystal inputs on upper two bits
   if (address1 != address2) return;  
+
+  rw = digitalReadFast(PIN_RW);
 
   if (rw)
   {
